@@ -1,5 +1,15 @@
 <?php
 
+Route::get('1', function(){
+
+	$taxpayer = Taxpayer::with('taxes')->find(13218);
+
+	$tax = Tax::with('taxpayer')->find(1000332);
+
+	var_dump($tax->toArray(), $tax->taxpayer->rif);
+
+});
+
 Route::group(array('before' => 'guest'), function()
 {
 	// Nos mostrará el formulario de login.

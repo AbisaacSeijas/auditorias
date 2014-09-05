@@ -14,10 +14,11 @@
 				<div class="col-md-6">
 					<ul class="list-group">
 						<li class="list-group-item">
-							{{Form::select('tipo_cuenta', array('cuenta_nueva' => 'Cuenta Nueva', 'cuenta_renta' => 'Cuenta Renta'), NULL, ['class' => 'form-control'])}}
+							{{Form::select('tipo_cuenta', array('tax_account_number' => 'Cuenta Nueva', 'rent_account' => 'Cuenta Renta'), NULL, ['class' => 'form-control'])}}
 						</li>
 						<li class="list-group-item">
 								{{Form::text('tax_account_number', NULL, ['class' => 'form-control'])}}
+								{{Form::text('rent_account', NULL, ['class' => 'form-control'])}}
 						</li>			
 					</ul>
 				</div>
