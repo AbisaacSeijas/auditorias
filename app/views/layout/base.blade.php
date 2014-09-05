@@ -3,7 +3,7 @@
 <head>
     <title>
         @section('title')
-        Sistema de registro de idiomas
+        Auditorias
         @show
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +27,7 @@
     @show
 </head>
 <body>
-    @if (Auth::check()) {{-- USUARIO LOGUEADO --}}
+    @if (!Auth::check()) {{-- USUARIO LOGUEADO --}}
         @include('layout.menu')
     @else {{-- USUARIO NO LOGUEADO --}}
         @yield('content')

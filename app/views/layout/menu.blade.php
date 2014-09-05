@@ -15,18 +15,28 @@
 					<ul class="nav navbar-nav" id="menu-principal">
 						<li class="active">
 							<a href="{{url('/')}}" data-parent="#menu-principal" class="collapsed">
-								<h4><small>SISRI</small></h4>
+								<h4><small>AUDITORIAS</small></h4>
 							</a>
 						</li>
-						<li><a href="#"><span class="glyphicon glyphicon-user"></span>Personas</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-calendar"></span>Visitas</a></li>
 						<li>
-							<a href="#" data-toggle="collapse" data-target="#menu-opciones" data-parent="#menu-principal" class="collapsed">
-								<span class="glyphicon glyphicon-cog"></span>Opciones<span class="caret pull-right"></span>
+							<a href="#" data-toggle="collapse" data-target="#auditorias" data-parent="#auditorias" class="collapsed">
+								<span class="glyphicon glyphicon-zoom-in"></span>Auditorias</a><span class="caret pull-right"></span>
 							</a>
-							<div class="collapse" id="menu-opciones" style="height: 0px;">
+							<div class="collapse" id="auditorias" style="height: 0px;">
 								<ul class="nav nav-list">
-									<li class="text-right"><a href="{{url('logout')}}"><span class="glyphicon glyphicon-log-out"></span>Cerrar sesión</a></li>
+									<li class="text-right"><a href="{{url('auditorias/orden')}}"><span class="glyphicon glyphicon-list-alt"></span>Orden</a></li>
+									<li class="text-right"><a href="#"><span class="glyphicon glyphicon-list"></span>Actas</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#" data-toggle="collapse" data-target="#usuarios" data-parent="#usuarios" class="collapsed">
+								<span class="glyphicon glyphicon-user"></span>Usuarios</a><span class="caret pull-right"></span>
+							</a>
+							<div class="collapse" id="usuarios" style="height: 0px;">
+								<ul class="nav nav-list">
+									<li class="text-right"><a href="#"><span class="glyphicon glyphicon-plus"></span>Nuevo</a></li>
+									<li class="text-right"><a href="#"><span class="glyphicon glyphicon-user"></span>Usuarios</a></li>
 								</ul>
 							</div>
 						</li>
