@@ -78,3 +78,11 @@
 </div>
 {{ Form::close() }}
 @stop
+
+@section('scripts')
+
+<script>
+	
+</script>
+
+@stop
