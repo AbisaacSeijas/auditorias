@@ -10,11 +10,14 @@ class Taxpayer extends Ardent {
 
 	public static $rules = array();
 
-	public $timestamps = false;
-
 	public function taxes()
 	{
 		return $this->hasMany('Tax', 'id_taxpayer');
+	}
+
+	public function telefonos()
+	{
+		return $this->hasMany('InfTaxpayer', 'id_taxpayer')->where('id_inf_contact_type', '1');
 	}
 /*
 	public static $relationsData = array(

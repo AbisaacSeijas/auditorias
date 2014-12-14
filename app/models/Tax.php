@@ -4,17 +4,25 @@ use LaravelBook\Ardent\Ardent;
 
 class Tax extends Ardent {
 
-	public $table = 'public.tax';
+	public $table = 'appweb.tax';
 
 	public $throwOnValidation = true;
 
 	public static $rules = array();
 
-	public $timestamps = false;
-
 	public function taxpayer()
 	{
 		return $this->belongsTo('Taxpayer', 'id_taxpayer');
+	}
+
+	public function permissibleActivities()
+	{
+		return $this->hasMany('PermissibleActivities', 'id_tax');
+	}
+
+	public function taxClassifier()
+	{
+		return $this->belongstoMany('TaxClassifier', 'permissible_activities', 'id_tax','id_classifier_tax');
 	}
 
 /*
