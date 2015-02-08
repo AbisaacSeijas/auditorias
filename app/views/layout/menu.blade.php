@@ -25,7 +25,7 @@
 							<div class="collapse" id="auditorias" style="height: 0px;">
 								<ul class="nav nav-list">
 									<li class="text-right"><a href="{{url('auditorias/orden')}}"><span class="glyphicon glyphicon-list-alt"></span>Orden</a></li>
-									<li class="text-right"><a href="#"><span class="glyphicon glyphicon-list"></span>Actas</a></li>
+									<li class="text-right"><a href="{{url('auditorias/acta')}}"><span class="glyphicon glyphicon-list"></span>Actas</a></li>
 								</ul>
 							</div>
 						</li>

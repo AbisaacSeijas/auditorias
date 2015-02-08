@@ -12,7 +12,7 @@
 		}
 	?>
 {{ Form::open(array('url' => 'auditorias/orden', 'method' => 'post', 'id' => 'form')) }}
-<div class="panel panel-primary">
+<div class="panel panel-primary" style="overflow:scroll;">
 <div class="panel-heading center"><p align="center">Cargar Orden</p></div>
 	<ul class="list-group">
 		<li class="list-group-item">
@@ -66,7 +66,9 @@
 			<li class="list-group-item">
 				<div class="row">
 					<div class="col-md-6"><strong>Fecha de Asignación</strong></div>
-					<div class="col-md-6">{{Form::input('date', 'assingment_date', NULL, ['class' => 'form-control', 'id' => 'fecha_asignacion'])}}</div>
+					<div class="col-md-6">{{Form::input('date', 'assingment_date', NULL, ['class' => 'form-control', 'id' => 'fecha_asignacion'])}}
+					{{Form::input('hidden', 'tipo_cuenta2', NULL, ['class' => 'form-control', 'id' => 'tipo_cuenta2'])}}
+					</div>
 				</div>
 			</li>
 			<li class="list-group-item">
@@ -79,7 +81,7 @@
 				<div class="row">
 					<div class="col-md-4"><strong>Años a Auditar</strong></div>
 					<div class="col-md-4">
-						{{Form::select('fiscal_years', array(), NULL, ['class' => 'form-control', 'size' => '5', 'id' =>'fiscal_years'])}}
+						{{Form::select('fiscal_years[]', array(), NULL, ['multiple'=> 'multiple', 'class' => 'form-control', 'size' => '5', 'id' =>'fiscal_years'])}}
 						{{Form::button('Eliminar', ['id' => 'botonEliminar'])}}
 					</div>
 					<div class="col-md-4">
@@ -99,12 +101,6 @@
 				<div class="col-md-6"><p align="right">{{Form::submit('Enviar', ['id' => 'submit'])}}</p></div>
 			</div>
 		</div>
-		<li class="list-group-item" id="boton2" style="display:none;">
-				<div class="row">
-					<div class="col-md-6"><p align="right">{{Form::button('Generar Numero de Orden', ['id' => 'botonEnviar2'])}}</p></div>
-				</div>
-			</li>
-		</li>
 	</ul>
 </div>
 {{ Form::close() }}
@@ -120,7 +116,6 @@
 				$('#rent_account').val("");
 				$('#tax_account_number').show();
 				$('#boton').css('display', 'block');
-				$('#boton2').css('display', 'none');
 				$('#formulario2').css('display', 'none');
 
 			}
@@ -130,16 +125,13 @@
 				$('#rent_account').hide();
 				$('#rent_account').val("");
 				$('#boton').css('display', 'none');
-				$('#boton2').css('display', 'block');
 				$('#formulario2').show('8000');
-				$('#boton3').css('display', 'none');
 			}
 			else{
 				$('#tax_account_number').hide();
 				$('#tax_account_number').val("");
 				$('#rent_account').show();
 				$('#boton').css('display', 'block');
-				$('#boton2').css('display', 'none');
 				$('#formulario2').css('display', 'none');
 			}
 		});
@@ -179,10 +171,12 @@
 			$('#fiscal_years option:selected').appendTo('#years2');
 		});
 
-		$('#submit').on('submit', function(){
+		$('#submit').on('click', function(){
 			var options = new Array();
-			$('#fiscal_years > option:selected').each(function(i){
-         		options[i] = $(this).val();
+			var tax=$('#tipo_cuenta option:selected').val();
+			$('#tipo_cuenta2').val(tax);
+			$('#fiscal_years option').each(function(){
+         		$(this).html("selected", "true");
      		});
 		});
 	});

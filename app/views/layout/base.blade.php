@@ -16,6 +16,10 @@
     {{HTML::script('js/jquery-1.11.0.min.js')}}
     {{HTML::script('js/bootstrap.min.js')}}
     {{HTML::script('js/main.js')}}
+    <!--Datatables -->
+    {{HTML::script('js/dataTables.bootstrap.js')}}
+    {{HTML::script('js/jquery.dataTables.min.js')}}
+    {{HTML::style('css/dataTables.bootstrap.css')}}
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>

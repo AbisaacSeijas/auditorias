@@ -11,9 +11,7 @@
 			$audit_status= new AuditStatus();
 			$auditoria = new Auditoria();
     		$datos = Input::all();
-    		var_dump($datos);
-    		/*
-            $field = Input::get('tipo_cuenta');
+            $field = Input::get('tipo_cuenta2');
             if($field!='no_account'){
            		$tax = Tax::where($field, Input::get($field))->first();
     			$auditoria->id_tax = $tax->id;
@@ -21,25 +19,25 @@
     		$auditoria->id_user='1';
     		$auditoria->assingment_date=$datos['assingment_date'];
     		$auditoria->reason=$datos['reason'];
+    		$años="{". implode(",", $datos['fiscal_years']) . "}";
+    		$auditoria->fiscal_years=$años;
     		$auditoria->observ=$datos['observ'];
+				try
+				{
+					DB::transaction(function() use ($auditoria)
+					{
+						$auditoria->save();			
+					});
 
+					return Redirect::to('auditorias/orden')->with('message', '¡Registro Exitoso!');
 
-		try
-		{
-			DB::transaction(function() use ($auditoria)
-			{
-				$auditoria->save();			
-			});
+				}
+				catch (Exception $e)
+				{
 
-			return Redirect::to('auditorias/orden')->with('message', '¡Registro Exitoso!');
-
+					return Redirect::to('auditorias/orden')->with('message', '¡Registro Fallido!');
+				}
 		}
-		catch (Exception $e)
-		{
-
-			return Redirect::to('auditorias/orden')->with('message', '¡Registro Fallido!');
-		}*/
-	}
 
 
 		public function ajax_tax()
@@ -53,6 +51,13 @@
 			->where(Input::get('tipo'),Input::get('valor'))
 			->first();
 		}
+
+		public function acta()
+			{
+				$audits=AuditData::all();
+				return View::make('auditorias.acta')->with("audits", $audits);
+			}
+
 	}
 
 
