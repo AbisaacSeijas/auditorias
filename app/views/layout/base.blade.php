@@ -40,5 +40,9 @@
     @section('scripts')
     <!-- My scripts-->
     @show
+
+    @section('style')
+    <!-- My styles-->
+    @show
 </body>
 </html>

@@ -58,6 +58,32 @@
 				return View::make('auditorias.acta')->with("audits", $audits);
 			}
 
+		public function save_acta()
+			{
+				$audit_status= new AuditStatus();
+				$datos=Input::all();
+				/*OBTENER EL STATUS DE LA AUDITORIA*/
+				$status=AuditStatus::$status;
+				$id_status=$status[$datos['status']];
+				/*INSERTAMOS LA DATA*/
+				$audit_status->id_audit=$datos['id_audit'];
+				$audit_status->id_status=$id_status;
+				$audit_status->date=$datos['date'];
+				$audit_status->observation=$datos['observation'];
+				try
+				{
+					DB::transaction(function() use ($audit_status)
+					{
+						$audit_status->save();			
+					});
+
+					return Redirect::to('auditorias/acta')->with('message', '¡Registro Exitoso!');
+
+				}
+				catch (Exception $e)
+				{
+
+					return Redirect::to('auditorias/acta')->with('message', '¡Registro Fallido!');
+				}
+			}
 	}
-
-

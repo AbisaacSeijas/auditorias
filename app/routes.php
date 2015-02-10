@@ -18,6 +18,8 @@ Route::group(array('before' => 'guest'), function()
     Route::get('/auditorias/orden', 'AuditoriasController@orden');
     // Guardará la orden
     Route::post('/auditorias/orden', 'AuditoriasController@save_orden');
+    // Guardar cambios en la auditoria
+    Route::post('/auditorias/acta', 'AuditoriasController@save_acta');
     // Nos mostrará la vista de las actas
  	Route::get('/auditorias/acta', 'AuditoriasController@acta');
 	// Validamos los datos de inicio de sesión.

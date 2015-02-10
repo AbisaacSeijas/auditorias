@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.5
 -- Dumped by pg_dump version 9.3.5
--- Started on 2015-02-08 19:03:38
+-- Started on 2015-02-10 12:57:56
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -26,7 +26,7 @@ ALTER SCHEMA audit OWNER TO audit;
 SET search_path = audit, pg_catalog;
 
 --
--- TOC entry 1159 (class 1255 OID 52349)
+-- TOC entry 1161 (class 1255 OID 52349)
 -- Name: generate_order_number(); Type: FUNCTION; Schema: audit; Owner: postgres
 --
 
@@ -66,7 +66,7 @@ $$;
 ALTER FUNCTION audit.generate_order_number() OWNER TO postgres;
 
 --
--- TOC entry 1158 (class 1255 OID 52348)
+-- TOC entry 1160 (class 1255 OID 52348)
 -- Name: get_order_number(integer); Type: FUNCTION; Schema: audit; Owner: postgres
 --
 
@@ -114,6 +114,85 @@ END$_$;
 
 
 ALTER FUNCTION audit.get_order_number(integer) OWNER TO postgres;
+
+--
+-- TOC entry 1165 (class 1255 OID 76931)
+-- Name: insert_final_review(); Type: FUNCTION; Schema: audit; Owner: audit
+--
+
+CREATE FUNCTION insert_final_review() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$   BEGIN
+
+	 UPDATE audit.audits 
+	 SET id_final_review =NEW.id 
+	 WHERE id = NEW.id_audit;
+
+	RETURN NEW; 
+   END;$$;
+
+
+ALTER FUNCTION audit.insert_final_review() OWNER TO audit;
+
+--
+-- TOC entry 1158 (class 1255 OID 68743)
+-- Name: insert_id_notification(); Type: FUNCTION; Schema: audit; Owner: postgres
+--
+
+CREATE FUNCTION insert_id_notification() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+   BEGIN
+
+	 UPDATE audit.audits 
+	 SET id_notification =NEW.id 
+	 WHERE id = NEW.id_audit;
+
+	RETURN NEW; 
+   END;
+    
+ $$;
+
+
+ALTER FUNCTION audit.insert_id_notification() OWNER TO postgres;
+
+--
+-- TOC entry 1164 (class 1255 OID 76927)
+-- Name: insert_id_reception(); Type: FUNCTION; Schema: audit; Owner: audit
+--
+
+CREATE FUNCTION insert_id_reception() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$   BEGIN
+
+	 UPDATE audit.audits 
+	 SET id_reception =NEW.id 
+	 WHERE id = NEW.id_audit;
+
+	RETURN NEW; 
+   END;$$;
+
+
+ALTER FUNCTION audit.insert_id_reception() OWNER TO audit;
+
+--
+-- TOC entry 1159 (class 1255 OID 76925)
+-- Name: insert_id_requirement(); Type: FUNCTION; Schema: audit; Owner: audit
+--
+
+CREATE FUNCTION insert_id_requirement() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$   BEGIN
+
+	 UPDATE audit.audits 
+	 SET id_requirement =NEW.id 
+	 WHERE id = NEW.id_audit;
+
+	RETURN NEW; 
+   END;$$;
+
+
+ALTER FUNCTION audit.insert_id_requirement() OWNER TO audit;
 
 --
 -- TOC entry 969 (class 1259 OID 44141)
@@ -180,7 +259,7 @@ CREATE TABLE audits (
     id_requirement integer,
     id_reception integer,
     id_result integer,
-    id_status integer,
+    id_actual_status integer,
     id_identification_repair integer,
     created_at date,
     deleted_at date,
@@ -404,50 +483,63 @@ CREATE TABLE repairs (
 ALTER TABLE audit.repairs OWNER TO audit;
 
 --
--- TOC entry 4185 (class 0 OID 35895)
+-- TOC entry 4193 (class 0 OID 35895)
 -- Dependencies: 967
 -- Data for Name: audit_status; Type: TABLE DATA; Schema: audit; Owner: audit
 --
 
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (11, 1, 10, NULL, 'adasd', '2015-02-04', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (19, NULL, 10, 5, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (20, 1, 10, NULL, 'hola k ase', '2015-02-12', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (21, 1, 11, NULL, 'gdfgdgf', '2015-02-20', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (22, 1, 10, NULL, 'vvvnvbvn', '2015-02-20', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (23, 2, 11, NULL, 'sdfsdfsdf', '2015-02-11', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (24, 2, 11, NULL, 'fdsfsf', '2015-02-11', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (25, 2, 10, NULL, 'hfghfghf', '2015-02-12', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (26, 3, 11, NULL, 'adasda', '2015-02-11', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (27, 3, 10, NULL, 'fghf', '2015-02-11', '2015-02-10', NULL, '2015-02-10');
+INSERT INTO audit_status (id, id_status, id_audit, id_user, observation, date, created_at, deleted_at, updated_at) VALUES (28, 4, 10, NULL, 'dfgdg', '2015-02-11', '2015-02-10', NULL, '2015-02-10');
 
 
 --
--- TOC entry 4197 (class 0 OID 0)
+-- TOC entry 4205 (class 0 OID 0)
 -- Dependencies: 969
 -- Name: audit_status_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('audit_status_id_seq', 1, false);
+SELECT pg_catalog.setval('audit_status_id_seq', 28, true);
 
 
 --
--- TOC entry 4181 (class 0 OID 35848)
+-- TOC entry 4189 (class 0 OID 35848)
 -- Dependencies: 963
 -- Data for Name: audits; Type: TABLE DATA; Schema: audit; Owner: postgres
 --
 
+INSERT INTO audits (id, id_tax, id_requirement, id_reception, id_result, id_actual_status, id_identification_repair, created_at, deleted_at, updated_at, fiscal_years, reason, observ, assingment_date, id_user, order_number, id_notification, id_final_review, id_result_notification, id_resolution_notification, amount, fiscal_act_number, result, id_resolution_review) VALUES (11, 1004415, 26, NULL, NULL, NULL, NULL, '2015-02-09', NULL, '2015-02-09', '{2014,2012}', 'despacho', 'ggfhfgh', '2015-02-12', 1, 'ORD-000004-2015', 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO audits (id, id_tax, id_requirement, id_reception, id_result, id_actual_status, id_identification_repair, created_at, deleted_at, updated_at, fiscal_years, reason, observ, assingment_date, id_user, order_number, id_notification, id_final_review, id_result_notification, id_resolution_notification, amount, fiscal_act_number, result, id_resolution_review) VALUES (10, NULL, 25, 27, NULL, NULL, NULL, '2015-02-09', NULL, '2015-02-09', '{2014,2012}', 'despacho', 'dfsfsdfs', '2015-02-12', 1, 'ORD-000003-2015', 22, 28, NULL, NULL, NULL, NULL, NULL, NULL);
 
 
 --
--- TOC entry 4198 (class 0 OID 0)
+-- TOC entry 4206 (class 0 OID 0)
 -- Dependencies: 968
 -- Name: audits_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('audits_id_seq', 9, true);
+SELECT pg_catalog.setval('audits_id_seq', 11, true);
 
 
 --
--- TOC entry 4199 (class 0 OID 0)
+-- TOC entry 4207 (class 0 OID 0)
 -- Dependencies: 973
 -- Name: ord_15; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ord_15', 2, true);
+SELECT pg_catalog.setval('ord_15', 4, true);
 
 
 --
--- TOC entry 4200 (class 0 OID 0)
+-- TOC entry 4208 (class 0 OID 0)
 -- Dependencies: 974
 -- Name: ord_16; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
@@ -456,7 +548,7 @@ SELECT pg_catalog.setval('ord_16', 1, true);
 
 
 --
--- TOC entry 4183 (class 0 OID 35866)
+-- TOC entry 4191 (class 0 OID 35866)
 -- Dependencies: 965
 -- Data for Name: repair_details; Type: TABLE DATA; Schema: audit; Owner: audit
 --
@@ -464,7 +556,7 @@ SELECT pg_catalog.setval('ord_16', 1, true);
 
 
 --
--- TOC entry 4201 (class 0 OID 0)
+-- TOC entry 4209 (class 0 OID 0)
 -- Dependencies: 970
 -- Name: repair_details_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
@@ -473,7 +565,7 @@ SELECT pg_catalog.setval('repair_details_id_seq', 1, false);
 
 
 --
--- TOC entry 4182 (class 0 OID 35856)
+-- TOC entry 4190 (class 0 OID 35856)
 -- Dependencies: 964
 -- Data for Name: repairs; Type: TABLE DATA; Schema: audit; Owner: audit
 --
@@ -481,7 +573,7 @@ SELECT pg_catalog.setval('repair_details_id_seq', 1, false);
 
 
 --
--- TOC entry 4202 (class 0 OID 0)
+-- TOC entry 4210 (class 0 OID 0)
 -- Dependencies: 971
 -- Name: repairs_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
@@ -490,24 +582,31 @@ SELECT pg_catalog.setval('repairs_id_seq', 1, false);
 
 
 --
--- TOC entry 4184 (class 0 OID 35887)
+-- TOC entry 4192 (class 0 OID 35887)
 -- Dependencies: 966
 -- Data for Name: status; Type: TABLE DATA; Schema: audit; Owner: audit
 --
 
+INSERT INTO status (id, name, created_at, updated_at, deleted_at) VALUES (1, 'notification_date', NULL, NULL, NULL);
+INSERT INTO status (id, name, created_at, updated_at, deleted_at) VALUES (2, 'requirement_date', NULL, NULL, NULL);
+INSERT INTO status (id, name, created_at, updated_at, deleted_at) VALUES (3, 'reception_date', NULL, NULL, NULL);
+INSERT INTO status (id, name, created_at, updated_at, deleted_at) VALUES (4, 'final_review_date', NULL, NULL, NULL);
+INSERT INTO status (id, name, created_at, updated_at, deleted_at) VALUES (5, 'result_notification_date', NULL, NULL, NULL);
+INSERT INTO status (id, name, created_at, updated_at, deleted_at) VALUES (6, 'resolution_review_date', NULL, NULL, NULL);
+INSERT INTO status (id, name, created_at, updated_at, deleted_at) VALUES (7, 'resolution_notification_date', NULL, NULL, NULL);
 
 
 --
--- TOC entry 4203 (class 0 OID 0)
+-- TOC entry 4211 (class 0 OID 0)
 -- Dependencies: 972
 -- Name: status_id_seq; Type: SEQUENCE SET; Schema: audit; Owner: postgres
 --
 
-SELECT pg_catalog.setval('status_id_seq', 1, false);
+SELECT pg_catalog.setval('status_id_seq', 7, true);
 
 
 --
--- TOC entry 4044 (class 2606 OID 35852)
+-- TOC entry 4048 (class 2606 OID 35852)
 -- Name: auditorias_pkey; Type: CONSTRAINT; Schema: audit; Owner: postgres; Tablespace: 
 --
 
@@ -516,7 +615,7 @@ ALTER TABLE ONLY audits
 
 
 --
--- TOC entry 4046 (class 2606 OID 35860)
+-- TOC entry 4050 (class 2606 OID 35860)
 -- Name: repair; Type: CONSTRAINT; Schema: audit; Owner: audit; Tablespace: 
 --
 
@@ -525,7 +624,7 @@ ALTER TABLE ONLY repairs
 
 
 --
--- TOC entry 4048 (class 2606 OID 35870)
+-- TOC entry 4052 (class 2606 OID 35870)
 -- Name: repair_det; Type: CONSTRAINT; Schema: audit; Owner: audit; Tablespace: 
 --
 
@@ -534,7 +633,7 @@ ALTER TABLE ONLY repair_details
 
 
 --
--- TOC entry 4050 (class 2606 OID 35894)
+-- TOC entry 4054 (class 2606 OID 35894)
 -- Name: stat; Type: CONSTRAINT; Schema: audit; Owner: audit; Tablespace: 
 --
 
@@ -543,7 +642,7 @@ ALTER TABLE ONLY status
 
 
 --
--- TOC entry 4052 (class 2606 OID 35902)
+-- TOC entry 4056 (class 2606 OID 35902)
 -- Name: stats_audits; Type: CONSTRAINT; Schema: audit; Owner: audit; Tablespace: 
 --
 
@@ -552,7 +651,7 @@ ALTER TABLE ONLY audit_status
 
 
 --
--- TOC entry 4058 (class 2620 OID 52350)
+-- TOC entry 4062 (class 2620 OID 52350)
 -- Name: generate_order_number; Type: TRIGGER; Schema: audit; Owner: postgres
 --
 
@@ -560,7 +659,39 @@ CREATE TRIGGER generate_order_number BEFORE INSERT ON audits FOR EACH ROW EXECUT
 
 
 --
--- TOC entry 4054 (class 2606 OID 35861)
+-- TOC entry 4066 (class 2620 OID 76932)
+-- Name: id_final_review; Type: TRIGGER; Schema: audit; Owner: audit
+--
+
+CREATE TRIGGER id_final_review AFTER INSERT ON audit_status FOR EACH ROW WHEN ((new.id_status = 4)) EXECUTE PROCEDURE insert_final_review();
+
+
+--
+-- TOC entry 4063 (class 2620 OID 76924)
+-- Name: insert_id_notification; Type: TRIGGER; Schema: audit; Owner: audit
+--
+
+CREATE TRIGGER insert_id_notification AFTER INSERT ON audit_status FOR EACH ROW WHEN ((new.id_status = 1)) EXECUTE PROCEDURE insert_id_notification();
+
+
+--
+-- TOC entry 4065 (class 2620 OID 76930)
+-- Name: insert_id_reception; Type: TRIGGER; Schema: audit; Owner: audit
+--
+
+CREATE TRIGGER insert_id_reception AFTER INSERT ON audit_status FOR EACH ROW WHEN ((new.id_status = 3)) EXECUTE PROCEDURE insert_id_reception();
+
+
+--
+-- TOC entry 4064 (class 2620 OID 76926)
+-- Name: insert_id_requirement; Type: TRIGGER; Schema: audit; Owner: audit
+--
+
+CREATE TRIGGER insert_id_requirement AFTER INSERT ON audit_status FOR EACH ROW WHEN ((new.id_status = 2)) EXECUTE PROCEDURE insert_id_requirement();
+
+
+--
+-- TOC entry 4058 (class 2606 OID 35861)
 -- Name: audit_repair; Type: FK CONSTRAINT; Schema: audit; Owner: audit
 --
 
@@ -569,7 +700,7 @@ ALTER TABLE ONLY repairs
 
 
 --
--- TOC entry 4057 (class 2606 OID 35903)
+-- TOC entry 4061 (class 2606 OID 35903)
 -- Name: audits_stat_audits; Type: FK CONSTRAINT; Schema: audit; Owner: audit
 --
 
@@ -578,7 +709,7 @@ ALTER TABLE ONLY audit_status
 
 
 --
--- TOC entry 4055 (class 2606 OID 35871)
+-- TOC entry 4059 (class 2606 OID 35871)
 -- Name: repair_repair_det; Type: FK CONSTRAINT; Schema: audit; Owner: audit
 --
 
@@ -587,7 +718,7 @@ ALTER TABLE ONLY repair_details
 
 
 --
--- TOC entry 4053 (class 2606 OID 35876)
+-- TOC entry 4057 (class 2606 OID 35876)
 -- Name: repair_statement; Type: FK CONSTRAINT; Schema: audit; Owner: audit
 --
 
@@ -596,7 +727,7 @@ ALTER TABLE ONLY repairs
 
 
 --
--- TOC entry 4056 (class 2606 OID 35908)
+-- TOC entry 4060 (class 2606 OID 35908)
 -- Name: stat_audits_stat; Type: FK CONSTRAINT; Schema: audit; Owner: audit
 --
 
@@ -604,7 +735,7 @@ ALTER TABLE ONLY audit_status
     ADD CONSTRAINT stat_audits_stat FOREIGN KEY (id_status) REFERENCES status(id);
 
 
--- Completed on 2015-02-08 19:03:39
+-- Completed on 2015-02-10 12:57:56
 
 --
 -- PostgreSQL database dump complete
